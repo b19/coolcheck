@@ -37,7 +37,7 @@ public class CoolServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		String pathInfo = req.getPathInfo().toString();
+		String pathInfo = req.getServletPath().toString();
 		
 		if(pathInfo.equals("/signin/")) {
 			getSignin(req, resp);
