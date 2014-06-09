@@ -2,7 +2,9 @@ package com.check.cool;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -87,9 +90,11 @@ public class CoolServlet extends HttpServlet {
 	private void deleteAll() {
 		Query q = new Query("LIST");
 		PreparedQuery pq = ds.prepare(q);
+		ArrayList<Key> list = new ArrayList<Key>();
 		for (Entity result : pq.asIterable()) {
-			ds.delete(result.getKey());
+			list.add(result.getKey());
 		}
+		ds.delete(list);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
