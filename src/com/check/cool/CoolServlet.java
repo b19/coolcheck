@@ -18,6 +18,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 @SuppressWarnings("serial")
 public class CoolServlet extends HttpServlet {
@@ -40,7 +41,7 @@ public class CoolServlet extends HttpServlet {
 		// user = oauth.getCurrentUser();
 		req.setAttribute("user", UUID.randomUUID());
 //		ArrayList<Stamp> list = getList();
-		req.setAttribute("stampList", ds.prepare(new Query("LIST")).asIterator());
+		req.setAttribute("stampList", ds.prepare(new Query("LIST").addSort("date", SortDirection.DESCENDING)).asIterator());
 		rd = req.getRequestDispatcher("/WEB-INF/view/list.jsp");
 		// }
 		try {
@@ -64,7 +65,7 @@ public class CoolServlet extends HttpServlet {
 				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		e.setProperty("alt", req.getParameter("alt"));
 		e.setProperty("lon", req.getParameter("lon"));
-		ds.put(e);
+ 		ds.put(e);
 		resp.sendRedirect("/");
 	}
 

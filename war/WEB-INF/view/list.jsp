@@ -37,22 +37,19 @@
 </style>
 </head>
 <body>
-<div style="margin-bottom:50px;">
+<div style="margin-bottom: 70px;">
+<%Iterator itr = (Iterator)request.getAttribute("stampList");%>
 	<h1
 		style="background-color: #eee; color: #555; margin: 0 0 20px 0; padding: 10px;">COOL-CHECK</h1>
-	<%Iterator itr = (Iterator<Entity>)request.getAttribute("stampList"); %>
-	<%Entity e;%>
-	<%while(itr.hasNext()){%>
-	<%e = (Entity)itr.next();%>
-	<a class="cool-list" data-target="#cool-modal-event"
-		data-toggle="modal" href="#"
-		onclick="showPosition(<%=e.getProperty("alt")%>,<%=e.getProperty("lon")%>)">
-		<%=e.getProperty("date")%>에 <%=e.getProperty("name")%>님
-		출첵!
-	</a>
+	<%while(itr.hasNext()){ %>
+	<%Entity e = (Entity)itr.next(); %>
+		<a class="cool-list" data-target="#cool-modal-event"
+			data-toggle="modal" href="#"
+			onclick="showPosition(<%=e.getProperty("alt")%>,<%=e.getProperty("lon")%>)"> <%=e.getProperty("date")%>에
+			<%=e.getProperty("name")%>님 출첵!</a>
 	<%} %>
-	<form action="/" method="post" enctype="application/x-www-form-urlencoded">
-		<input type="hidden" id="cool-lat" name="alt"> <input
+	<form action="/" method="post">
+		<input type="hidden" id="cool-lat" name="lat"> <input
 			type="hidden" id="cool-lon" name="lon"> <input type="hidden"
 			name="name" value="${user}"> <input type="submit"
 			class="btn btn-primary btn-lg" id="cool-btn" value="STAMPING">
