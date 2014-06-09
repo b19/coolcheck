@@ -45,7 +45,7 @@
 	<%Entity e = (Entity)itr.next(); %>
 		<a class="cool-list" data-target="#cool-modal-event"
 			data-toggle="modal" href="#"
-			onclick="showPosition(<%=e.getProperty("alt")%>,<%=e.getProperty("lon")%>)"> <%=e.getProperty("date")%>에
+			onclick="showPosition(<%=e.getProperty("lat")%>,<%=e.getProperty("lon")%>)"> <%=e.getProperty("date")%>에
 			<%=e.getProperty("name")%>님 출첵!</a>
 	<%} %>
 	<form action="/" method="post">
