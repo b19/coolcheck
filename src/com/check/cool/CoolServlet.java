@@ -67,28 +67,31 @@ public class CoolServlet extends HttpServlet {
 			resp.getWriter().println("<h2>GAE - Integrating Google user account</h2>");
 		
 			if (user != null) {
-	 
 				resp.getWriter().println("Welcome, " + user.getNickname());
 				resp.getWriter().println(
 					"<a href='"
 						+ userService.createLogoutURL(req.getRequestURI())
 						+ "'> LogOut </a>");
-
 			} else {
 	 
 				resp.getWriter().println(
 					"Please <a href='"
 						+ userService.createLoginURL(req.getRequestURI())
 						+ "'> LogIn </a>");
-	 
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- 
 	}
-
+	
+	private void deleteAll() {
+		Query q = new Query("LIST");
+		PreparedQuery pq = ds.prepare(q);
+		for (Entity result : pq.asIterable()) {
+			ds.delete(result.getKey());
+		}
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
