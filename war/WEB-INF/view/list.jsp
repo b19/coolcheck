@@ -12,6 +12,9 @@
 <link rel="stylesheet"
 	href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 <style>
+body {
+	background: url(bg.png);
+}
 .cool-list {
 	display: block;
 	width: 100%;
@@ -34,7 +37,6 @@
 }
 #cool-all-remove-btn {
 	display: block;
-	position: fixed;
 	width: 100%;
 	border-radius: 0;
 }
@@ -42,11 +44,14 @@
 </head>
 <body>
 	<div style="margin-bottom: 70px;">
+		<div
+		style="background-color: rgba(30, 74, 154, 0.7); padding: 20px 0px;margin-bottom:30px;">
+		<h1 style="text-align: center; color: #fff; padding: 10px;">COOL-CHECK</h1>
+	</div>
+	
 		<%
 			Iterator itr = (Iterator) request.getAttribute("stampList");
 		%>
-		<h1
-			style="background-color: #eee; color: #555; margin: 0 0 20px 0; padding: 10px;">COOL-CHECK</h1>
 		<%
 			while (itr.hasNext()) {
 		%>
@@ -62,7 +67,7 @@
 			}
 		%>
 
-		<a class="btn btn-danger" href="/remove_all" id="cool-all-remove-btn">REMOVE ALL!</a>
+		<a class="btn btn-danger" href="/remove_all" id="cool-all-remove-btn" style="margin-top:30px;">REMOVE ALL!</a>
 
 		<form action="/" method="post">
 			<input type="hidden" id="cool-lat" name="lat"> <input
