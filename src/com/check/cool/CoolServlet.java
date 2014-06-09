@@ -37,7 +37,7 @@ public class CoolServlet extends HttpServlet {
 		String pathInfo = req.getServletPath().toString();
 		
 		if(pathInfo.equals("/signin")) {
-			getSignin(req, resp);
+			signIn(req, resp);
 			return;
 		}
 		
@@ -53,8 +53,13 @@ public class CoolServlet extends HttpServlet {
 			resp.getWriter().println("SYSTEM IS BUSY.");
 		}
 	}
-
-	private void getSignin(HttpServletRequest req, HttpServletResponse resp) {
+	
+	private void signIn(HttpServletRequest req, HttpServletResponse resp) {
+		UserService userService = UserServiceFactory.getUserService();
+		userService.createLoginURL(req.getRequestURI());
+	}
+	
+	private void isSignIn(HttpServletRequest req, HttpServletResponse resp) {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		resp.setContentType("text/html");
