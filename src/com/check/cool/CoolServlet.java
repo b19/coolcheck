@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +20,9 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 @SuppressWarnings("serial")
 public class CoolServlet extends HttpServlet {
@@ -30,29 +35,57 @@ public class CoolServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		// User user = null;
-		// try {
-		// OAuthService oauth = OAuthServiceFactory.getOAuthService();
+		String pathInfo = req.getPathInfo().toString();
+		
+		if(pathInfo.equals("/signin/")) {
+			getSignin(req, resp);
+		}
+		
 		RequestDispatcher rd;
-		// if (oauth.isUserAdmin()) {
-		// rd = req.getRequestDispatcher("/_ah/OAuthAuthorizeToken");
-		// } else {
-		// user = oauth.getCurrentUser();
+		
 		req.setAttribute("user", UUID.randomUUID());
-//		ArrayList<Stamp> list = getList();
 		req.setAttribute("stampList", ds.prepare(new Query("LIST")).asIterator());
 		rd = req.getRequestDispatcher("/WEB-INF/view/list.jsp");
-		// }
+		
 		try {
 			rd.forward(req, resp);
 		} catch (ServletException e) {
 			e.printStackTrace();
 			resp.getWriter().println("SYSTEM IS BUSY.");
 		}
-		// } catch (OAuthRequestException e) {
-		// resp.getWriter().println("THERE ARE SOME ERROR.");
-		// }
 	}
+
+	private void getSignin(HttpServletRequest req, HttpServletResponse resp) {
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+ 
+		resp.setContentType("text/html");
+		try {
+			resp.getWriter().println("<h2>GAE - Integrating Google user account</h2>");
+		
+			if (user != null) {
+	 
+				resp.getWriter().println("Welcome, " + user.getNickname());
+				resp.getWriter().println(
+					"<a href='"
+						+ userService.createLogoutURL(req.getRequestURI())
+						+ "'> LogOut </a>");
+
+			} else {
+	 
+				resp.getWriter().println(
+					"Please <a href='"
+						+ userService.createLoginURL(req.getRequestURI())
+						+ "'> LogIn </a>");
+	 
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ 
+	}
+
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
