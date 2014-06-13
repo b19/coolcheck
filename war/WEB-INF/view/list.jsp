@@ -15,6 +15,7 @@
 body {
 	background: url(bg.png);
 }
+
 .cool-list {
 	display: block;
 	width: 100%;
@@ -22,10 +23,12 @@ body {
 	text-align: center;
 	font-size: large;
 }
+
 .cool-list:hover {
 	color: #fff;
 	background-color: #428bca;
 }
+
 #cool-btn {
 	display: block;
 	position: fixed;
@@ -35,6 +38,7 @@ body {
 	bottom: 0;
 	left: 0;
 }
+
 #cool-all-remove-btn {
 	display: block;
 	width: 100%;
@@ -45,10 +49,15 @@ body {
 <body>
 	<div style="margin-bottom: 70px;">
 		<div
-		style="background-color: rgba(30, 74, 154, 0.7); padding: 20px 0px;margin-bottom:30px;">
-		<h1 style="text-align: center; color: #fff; padding: 10px;">COOL-CHECK</h1>
-	</div>
-	
+			style="background-color: rgba(30, 74, 154, 0.7); padding: 60px 0px;">
+			<h1 style="text-align: center; color: #fff; padding: 10px;">COOL-CHECK</h1>
+			<p style="text-align: center; margin: 10px">
+				<a class="btn"
+					style="width: 100px; color: #fff; border: 1px solid #fff"
+					href="${url}">SIGN OUT</a>
+			</p>
+		</div>
+
 		<%
 			Iterator itr = (Iterator) request.getAttribute("stampList");
 		%>
@@ -67,7 +76,8 @@ body {
 			}
 		%>
 
-		<a class="btn btn-danger" href="/remove_all" id="cool-all-remove-btn" style="margin-top:30px;">REMOVE ALL!</a>
+		<a class="btn btn-danger" href="/remove_all" id="cool-all-remove-btn"
+			style="margin-top: 30px;">REMOVE ALL!</a>
 
 		<form action="/" method="post">
 			<input type="hidden" id="cool-lat" name="lat"> <input

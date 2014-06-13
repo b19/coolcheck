@@ -47,6 +47,8 @@ public class CoolServlet extends HttpServlet {
 			resp.setContentType("text/html");
 			try {
 				if (user != null) {
+					req.setAttribute("url",
+							userService.createLogoutURL(req.getRequestURI()));
 					RequestDispatcher rd;
 					req.setAttribute("user", user.getNickname());
 					req.setAttribute(
